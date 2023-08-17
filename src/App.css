@@ -1,0 +1,78 @@
+.app {
+  display: block;
+  margin: 0 auto;
+  width: 500px;
+}
+
+.app-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 40px;
+  margin-bottom: 25px;
+}
+
+.contact-container {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, .5);
+  overflow: hidden;
+  min-height: 700px;
+}
+
+.contact-container__header {
+  color: #fff;
+  background-image: linear-gradient(to right bottom, #5DCCCE, #42AAAD);
+  display: flex;
+  font-weight: 300;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5px 5px 0 0;
+}
+
+.contact-container__title {
+  padding: 20px;
+  text-align: center;
+  font-size: 25px;
+}
+
+.contact-container__action {
+  padding: 20px 10px;
+}
+
+.contact-container__action button {
+  border: none;
+  background-color: transparent;
+  color: #fff;
+  font-size: 35px;
+  width: 50px;
+  height: 50px;
+  border-radius: 1000px;
+  transition: .3s;
+  cursor: pointer;
+}
+
+.contact-container__action:hover button {
+  background-color: #5DCCCE;
+}
+
+.app-header img {
+  width: 70px;
+}
+
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
