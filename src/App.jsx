@@ -5,21 +5,23 @@ import ContactList from './components/ContactList/ContactList'
 import ActionBtn from './components/ActionBtn/ActionBtn'
 import { useCallback, useMemo, useState, useRef } from 'react'
 import ContactForm from './components/ContactForm/ContactForm'
-import { useEffect } from 'react'
 
 function App() {
-  const [feature, setFeature] = useState('create')
+  const [feature, setFeature] = useState('list')
+  const [currentContactDetail, setContactDetail] = useState()
+  const [isDetailsInteractive, setIsDetailsInteractive] = useState(false)
   const listRef = useRef(null)
   const formRef = useRef(null)
 
   const nodeRef = useMemo(() => {
     if (feature === 'list') return listRef
-    if (feature === 'create') return formRef
+    return formRef
   }, [feature])
 
   const getTitle = useCallback(() => {
     if (feature === 'list') return 'Contact List'
     if (feature === 'create') return 'Add Contact'
+    if (feature === 'details') return 'Details'
   }, [feature])
 
   const DUMMY_CONTACT = [
@@ -40,6 +42,15 @@ function App() {
       email: 'test2@contact.com',
     },
   ]
+
+  const handleDetailsAction = () => {
+    if (isDetailsInteractive) {
+      setFeature('list')
+      setIsDetailsInteractive(false)
+    } else {
+      setIsDetailsInteractive(true)
+    }
+  }
 
   return (
     <div className="app">
@@ -77,6 +88,12 @@ function App() {
                 }}
               />
             )}
+            {feature === 'details' && (
+              <ActionBtn
+                action={isDetailsInteractive ? 'save' : 'edit'}
+                onClick={handleDetailsAction}
+              />
+            )}
           </div>
         </div>
         <SwitchTransition mode="out-in">
@@ -89,8 +106,12 @@ function App() {
             classNames="slide"
           >
             <div ref={nodeRef} className="contact-container__body">
-              {feature === 'list' && <ContactList contacts={DUMMY_CONTACT} />}
+              {feature === 'list' && <ContactList contacts={DUMMY_CONTACT} onItemClick={(contact) => {
+                setContactDetail(contact)
+                setFeature('details')
+              }} />}
               {feature === 'create' && <ContactForm />}
+              {feature === 'details' && <ContactForm isInteractive={isDetailsInteractive} details={currentContactDetail} />}
             </div>
           </CSSTransition>
         </SwitchTransition>

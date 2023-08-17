@@ -1,4 +1,4 @@
-import { BsPersonAdd, BsPersonCheckFill, BsArrowLeft } from 'react-icons/bs'
+import { BsPencilSquare, BsPersonAdd, BsPersonCheckFill, BsArrowLeft } from 'react-icons/bs'
 
 const ActionBtn = ({ action, icon, onClick }) => {
   const getActionIcon = () => {
@@ -7,6 +7,8 @@ const ActionBtn = ({ action, icon, onClick }) => {
         return <BsPersonAdd />
       case 'save':
         return <BsPersonCheckFill />
+      case 'edit':
+        return <BsPencilSquare />
       case 'back':
         return <BsArrowLeft />
       default:

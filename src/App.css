@@ -29,6 +29,7 @@
   align-items: center;
   justify-content: space-between;
   border-radius: 5px 5px 0 0;
+  position: relative;
 }
 
 .contact-container__header > div {
@@ -49,6 +50,19 @@
   border-radius: 1000px;
   transition: .3s;
   cursor: pointer;
+  position: absolute;
+}
+
+.contact-container__back {
+  position: absolute;
+  top: 0;
+  left: 5px;
+}
+
+.contact-container__action {
+  position: absolute;
+  top: 0;
+  right: 40px;
 }
 
 .app-header img {
