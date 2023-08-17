@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { v4 as uuidV4 } from 'uuid'
 
 const initialState = {
   feature: 'list',
@@ -25,7 +26,28 @@ const initialState = {
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
-  reducers: {},
+  reducers: {
+    changeFeature: (state, action) => {
+      state.feature = action.payload
+    },
+    create: (state, action) => {
+      state.contacts.push({ id: uuidV4(), ...action.payload })
+    },
+    update: (state, action) => {
+      state.contacts = state.contacts.map((contact) =>
+        contact.id === action.payload.id
+          ? { ...contact, ...action.payload }
+          : contact
+      )
+    },
+    remove: (state, action) => {
+      const indexes = state.contacts.map((c) => c.id)
+      const cIdx = indexes.indexOf(action.payload)
+
+      state.contacts.splice(cIdx, 1)
+    },
+  },
 })
 
 export default contactsSlice.reducer
+export const { changeFeature, create, update, remove } = contactsSlice.actions

@@ -1,0 +1,21 @@
+.btn {
+  padding: 10px;
+  min-width: 100px;
+  font-size: 15px;
+  transition: all .3s;
+  border: none;
+}
+
+.btn.btn--danger:hover {
+  background-color: #cf4c4c;
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+  transform: translateY(3px);
+}
+
+.btn.btn--danger {
+  color: #fff;
+  background-color: #e66060;
+}

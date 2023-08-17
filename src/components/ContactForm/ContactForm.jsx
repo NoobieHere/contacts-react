@@ -1,17 +1,19 @@
 import { useState } from 'react'
 import Input from '../Input/Input'
 import styles from './ContactForm.module.css'
+import { forwardRef } from 'react'
+import { useImperativeHandle } from 'react'
 
 const ContactField = ({ id, type, label, onChange, value, isInteractive }) => {
   return (
     <div className={styles['contact-field']}>
       <label htmlFor={id}>{label}</label>
-      <Input id={id} disabled={!isInteractive} type={type} onChange={onChange || (() => {})} value={value} />
+      <Input id={id} disabled={isInteractive === undefined ? false : !isInteractive} type={type} onChange={onChange || (() => {})} value={value} />
     </div>
   )
 }
 
-const ContactForm = ({details, isInteractive}) => {
+const ContactForm = forwardRef(({details, isInteractive}, ref) => {
   const [contactForm, setContactForm] = useState(details || {
     firstName: '',
     middleName: '',
@@ -26,6 +28,12 @@ const ContactForm = ({details, isInteractive}) => {
       [field]: e.target.value,
     }))
   }
+
+  useImperativeHandle(ref, () => ({
+    values: () => {
+      return contactForm
+    }
+  }))
 
   return (
     <div>
@@ -68,6 +76,6 @@ const ContactForm = ({details, isInteractive}) => {
       </form>
     </div>
   )
-}
+})
 
 export default ContactForm

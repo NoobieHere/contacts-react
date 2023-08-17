@@ -5,15 +5,19 @@ import ContactList from './components/ContactList/ContactList'
 import ActionBtn from './components/ActionBtn/ActionBtn'
 import { useCallback, useMemo, useState, useRef } from 'react'
 import ContactForm from './components/ContactForm/ContactForm'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { changeFeature, create, update, remove } from './features/contacts/contactsSlice'
+import Button from './components/Button/Button'
 
 function App() {
-  const contacts = useSelector((state) => state.contacts.contacts)
-  const [feature, setFeature] = useState('list')
+  const { feature, contacts } = useSelector((state) => state.contacts)
+  const dispatch = useDispatch()
+
   const [currentContactDetail, setContactDetail] = useState()
   const [isDetailsInteractive, setIsDetailsInteractive] = useState(false)
   const listRef = useRef(null)
   const formRef = useRef(null)
+  const contactFormRef = useRef(null)
 
   const nodeRef = useMemo(() => {
     if (feature === 'list') return listRef
@@ -26,9 +30,14 @@ function App() {
     if (feature === 'details') return 'Details'
   }, [feature])
 
+  const goTo = (feature) => {
+    dispatch(changeFeature(feature))
+  }
+  
   const handleDetailsAction = () => {
     if (isDetailsInteractive) {
-      setFeature('list')
+      dispatch(update(contactFormRef.current.values()))
+      goTo('list')
       setIsDetailsInteractive(false)
     } else {
       setIsDetailsInteractive(true)
@@ -44,13 +53,14 @@ function App() {
       <div className="contact-container">
         <div className="contact-container__header">
           {feature !== 'list' && (
-            <div className='contact-container__back'>
+            <div className="contact-container__back">
               <ActionBtn
-              action="back"
-              onClick={() => {
-                setFeature('list')
-              }}
-            />
+                action="back"
+                onClick={() => {
+                  goTo('list')
+                  setIsDetailsInteractive(false)
+                }}
+              />
             </div>
           )}
           <div className="contact-container__title">{getTitle()}</div>
@@ -59,7 +69,7 @@ function App() {
               <ActionBtn
                 action="add"
                 onClick={() => {
-                  setFeature('create')
+                  goTo('create')
                 }}
               />
             )}
@@ -67,7 +77,8 @@ function App() {
               <ActionBtn
                 action="save"
                 onClick={() => {
-                  setFeature('list')
+                  goTo('list')
+                  dispatch(create(contactFormRef.current.values()))
                 }}
               />
             )}
@@ -89,12 +100,35 @@ function App() {
             classNames="slide"
           >
             <div ref={nodeRef} className="contact-container__body">
-              {feature === 'list' && <ContactList contacts={contacts} onItemClick={(contact) => {
-                setContactDetail(contact)
-                setFeature('details')
-              }} />}
-              {feature === 'create' && <ContactForm />}
-              {feature === 'details' && <ContactForm isInteractive={isDetailsInteractive} details={currentContactDetail} />}
+              {feature === 'list' && (
+                <ContactList
+                  contacts={contacts}
+                  onItemClick={(contact) => {
+                    setContactDetail(contact)
+                    goTo('details')
+                  }}
+                />
+              )}
+              {feature === 'create' && <ContactForm ref={contactFormRef} />}
+              {feature === 'details' && (
+                <>
+                  <ContactForm
+                    ref={contactFormRef}
+                    isInteractive={isDetailsInteractive}
+                    details={currentContactDetail}
+                  />
+                  <Button
+                    className="fixBottom"
+                    state='danger'
+                    onClick={() => {
+                      dispatch(remove(currentContactDetail.id))
+                      goTo('list')
+                    }}
+                  >
+                    Remove Contact
+                  </Button>
+                </>
+              )}
             </div>
           </CSSTransition>
         </SwitchTransition>
