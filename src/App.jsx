@@ -5,8 +5,10 @@ import ContactList from './components/ContactList/ContactList'
 import ActionBtn from './components/ActionBtn/ActionBtn'
 import { useCallback, useMemo, useState, useRef } from 'react'
 import ContactForm from './components/ContactForm/ContactForm'
+import { useSelector } from 'react-redux'
 
 function App() {
+  const contacts = useSelector((state) => state.contacts.contacts)
   const [feature, setFeature] = useState('list')
   const [currentContactDetail, setContactDetail] = useState()
   const [isDetailsInteractive, setIsDetailsInteractive] = useState(false)
@@ -23,25 +25,6 @@ function App() {
     if (feature === 'create') return 'Add Contact'
     if (feature === 'details') return 'Details'
   }, [feature])
-
-  const DUMMY_CONTACT = [
-    {
-      id: 1,
-      firstName: 'Test',
-      middleName: 'Test',
-      lastName: 'Contact',
-      mobile: '099999999',
-      email: 'test@contact.com',
-    },
-    {
-      id: 2,
-      firstName: 'Test 2',
-      middleName: 'TestTwo',
-      lastName: 'ContactTwo',
-      mobile: '08888888',
-      email: 'test2@contact.com',
-    },
-  ]
 
   const handleDetailsAction = () => {
     if (isDetailsInteractive) {
@@ -106,7 +89,7 @@ function App() {
             classNames="slide"
           >
             <div ref={nodeRef} className="contact-container__body">
-              {feature === 'list' && <ContactList contacts={DUMMY_CONTACT} onItemClick={(contact) => {
+              {feature === 'list' && <ContactList contacts={contacts} onItemClick={(contact) => {
                 setContactDetail(contact)
                 setFeature('details')
               }} />}
