@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+html {
+  font-size: 15px;
+}
+
 body {
   height: 100vh;
   font-family: 'Inter', sans-serif ;
@@ -17,7 +21,7 @@ svg {
   display: inline-block;
 }
 
-.slide-enter > div{
+.slide-enter > div {
   transform: translateX(100%);
 }
 .slide-enter-active > div {

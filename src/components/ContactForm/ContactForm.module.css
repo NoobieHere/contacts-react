@@ -1,0 +1,13 @@
+.contact-field {
+  display: block;
+  padding: 20px;
+  position: relative;
+}
+
+.contact-field label {
+  display: block;
+}
+
+.contact-field input {
+  width: 100%; 
+}
