@@ -11,9 +11,9 @@ const ContactItem = ({ details, onClick }) => {
 const ContactList = ({ contacts, onItemClick }) => {
   return (
     <div>
-      {contacts.map((contact) => (
+      {contacts.length > 0 ? contacts.map((contact) => (
         <ContactItem key={contact.id} details={contact} onClick={() => onItemClick(contact)} />
-      ))}
+      )) : <p className='empty'>No Contacts</p>}
     </div>
   )
 }

@@ -4,6 +4,17 @@
   position: relative;
 }
 
+.contact-field__label {
+  display: flex;
+  align-items: baseline;
+  gap: 5px
+}
+
+.contact-field__label .error {
+  font-size: 12px;
+  color: #ff6464;
+}
+
 .contact-field label {
   display: block;
 }

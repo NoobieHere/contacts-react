@@ -35,7 +35,7 @@ function App() {
   }
   
   const handleDetailsAction = () => {
-    if (isDetailsInteractive) {
+    if (isDetailsInteractive && contactFormRef.current.isValid()) {
       dispatch(update(contactFormRef.current.values()))
       goTo('list')
       setIsDetailsInteractive(false)
@@ -77,8 +77,10 @@ function App() {
               <ActionBtn
                 action="save"
                 onClick={() => {
-                  goTo('list')
-                  dispatch(create(contactFormRef.current.values()))
+                  if (contactFormRef.current.isValid()) {
+                    dispatch(create(contactFormRef.current.values()))
+                    goTo('list')
+                  }
                 }}
               />
             )}

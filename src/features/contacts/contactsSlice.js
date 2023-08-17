@@ -4,22 +4,22 @@ import { v4 as uuidV4 } from 'uuid'
 const initialState = {
   feature: 'list',
   contacts: [
-    {
-      id: 1,
-      firstName: 'Test',
-      middleName: 'Test',
-      lastName: 'Contact',
-      mobile: '099999999',
-      email: 'test@contact.com',
-    },
-    {
-      id: 2,
-      firstName: 'Test 2',
-      middleName: 'TestTwo',
-      lastName: 'ContactTwo',
-      mobile: '08888888',
-      email: 'test2@contact.com',
-    },
+    // {
+    //   id: 1,
+    //   firstName: 'Test',
+    //   middleName: 'Test',
+    //   lastName: 'Contact',
+    //   mobile: '099999999',
+    //   email: 'test@contact.com',
+    // },
+    // {
+    //   id: 2,
+    //   firstName: 'Test 2',
+    //   middleName: 'TestTwo',
+    //   lastName: 'ContactTwo',
+    //   mobile: '08888888',
+    //   email: 'test2@contact.com',
+    // },
   ],
 }
 
